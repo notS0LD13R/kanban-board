@@ -1,0 +1,41 @@
+:root {
+    --dark01: #0d0b21;
+    --dark02: #15132b;
+    --iris: #7879f1;
+    --Primary: #6418c3;
+    --Secondary: #211a75;
+    --accent1: #e328af;
+    --accent2: #5ecfff;
+}
+
+//Resets
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    max-width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: var(--major-font);
+}
+
+input {
+    outline: none;
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+//Common
+
+body {
+    display: flex;
+}
