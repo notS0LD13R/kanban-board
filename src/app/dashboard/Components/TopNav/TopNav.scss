@@ -1,0 +1,203 @@
+.top-nav {
+    min-height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    gap: 1rem 0;
+
+    background-color: var(--dark02);
+
+    z-index: 100;
+    padding: 1rem 1rem;
+
+    a {
+        color: var(--Primary);
+        &:hover {
+            color: var(--iris);
+        }
+    }
+
+    .search-bar {
+        height: 60px;
+        width: min(400px, 90vw);
+        padding: 0 32px;
+        border-radius: 32px;
+
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-shrink: 0;
+
+        background-color: var(--Secondary);
+
+        svg {
+            color: var(--iris);
+            height: 30px;
+            width: 30px;
+        }
+        input {
+            width: 100%;
+            height: 100%;
+            color: #aaa;
+            font-family: inherit;
+            &::placeholder {
+                color: #aaa;
+                font-family: inherit;
+            }
+        }
+    }
+
+    .icon-group {
+        display: flex;
+        gap: 1rem;
+
+        span {
+            position: relative;
+            --msg-count: " 0";
+            &::before {
+                content: var(--msg-count);
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
+
+                background-color: var(--accent2);
+
+                top: -25%;
+                right: -25%;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            &:nth-of-type(4) {
+                &::before {
+                    background-color: var(--accent1);
+                }
+            }
+            svg {
+                color: var(--iris);
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+
+    .lang-select {
+        width: 175px;
+        color: white;
+        position: relative;
+
+        .curr-option {
+            background-color: var(--Secondary);
+            height: 60px;
+            padding: 0 32px;
+            border-radius: 32px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            cursor: pointer;
+        }
+        .lang-list {
+            height: 136px;
+            width: 100%;
+
+            border-radius: 5px;
+            padding: 0.5rem 0px;
+            background-color: var(--Secondary);
+
+            position: absolute;
+            top: 80px;
+
+            overflow-y: auto;
+
+            &:not(.active) {
+                display: none;
+            }
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .lang-option {
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 32px;
+                align-items: center;
+
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--iris);
+                }
+            }
+        }
+
+        img {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .profile {
+        display: flex;
+        color: #aaa;
+        align-items: center;
+        gap: 1rem;
+        & > div {
+            display: flex;
+            flex-direction: column;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    .top-nav {
+        .search-bar {
+            width: 100%;
+        }
+    }
+}
+@media (max-width: 800px) {
+    .top-nav {
+        a {
+            display: none;
+        }
+        .lang-select {
+            width: 50px;
+            * {
+                //using start so no other way
+                padding: 0 !important;
+                justify-content: center !important;
+                gap: 0.25rem;
+            }
+            span {
+                display: none;
+            }
+        }
+        .profile {
+            & > div {
+                display: none;
+            }
+        }
+    }
+}
+@media (max-width: 800px) {
+    .icon-group {
+        width: 100%;
+        justify-content: center;
+    }
+}
