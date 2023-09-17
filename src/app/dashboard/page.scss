@@ -1,0 +1,9 @@
+.dashboard-layout {
+    width: 100%;
+}
+
+@media (max-width: 800px) {
+    .dashboard-layout {
+        padding-left: 75px; //from SideNav
+    }
+}
