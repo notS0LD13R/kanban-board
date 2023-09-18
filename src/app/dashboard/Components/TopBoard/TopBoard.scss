@@ -31,6 +31,10 @@
 
         cursor: pointer;
 
+        &:hover {
+            mix-blend-mode: plus-lighter;
+        }
+
         svg {
             color: inherit;
         }
