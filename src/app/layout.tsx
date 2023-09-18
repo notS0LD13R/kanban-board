@@ -1,7 +1,7 @@
-import "./globals.scss";
 import type { Metadata } from "next";
 import { Cairo, Open_Sans } from "next/font/google";
 
+import "./globals.scss";
 import SideNav from "./Components/SideNav/SideNav";
 
 const font1 = Cairo({ subsets: ["latin"], variable: "--major-font" });
