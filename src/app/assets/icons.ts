@@ -15,6 +15,9 @@ import {
     BsCalendarFill as Calendar,
     BsPersonVideo3 as Course,
     BsFillArrowLeftCircleFill as Leftarrow,
+    BsFillPlusSquareFill as Plus,
+    BsThreeDots as Dotsmenu,
+    BsClock as Clock,
 } from "react-icons/bs";
 import {
     LiaFileInvoiceSolid as Invoice,
@@ -46,5 +49,8 @@ const icons = {
     Leftarrow,
     Useradd,
     Comments,
+    Plus,
+    Dotsmenu,
+    Clock,
 };
 export default icons;

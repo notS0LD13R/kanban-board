@@ -57,9 +57,9 @@ export default function TopBoard() {
     );
 }
 
-function UsersCircle() {
+export function UsersCircle(props: { users?: any[] }) {
     //could house user profile pic later on
-    const users = [{}, {}, {}, {}, {}, {}, {}];
+    const users = props.users || [{}, {}, {}, {}, {}, {}, {}];
 
     return (
         <div className="users-circle">
