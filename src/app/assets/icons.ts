@@ -14,12 +14,18 @@ import {
 import {
     BsCalendarFill as Calendar,
     BsPersonVideo3 as Course,
+    BsFillArrowLeftCircleFill as Leftarrow,
 } from "react-icons/bs";
 import {
     LiaFileInvoiceSolid as Invoice,
     LiaSearchSolid as Search,
+    LiaCommentSolid as Comments,
 } from "react-icons/lia";
-import { FaBell as Bell, FaFolder as Folder } from "react-icons/fa";
+import {
+    FaBell as Bell,
+    FaFolder as Folder,
+    FaUserPlus as Useradd,
+} from "react-icons/fa";
 const icons = {
     Menu,
     Meter,
@@ -37,5 +43,8 @@ const icons = {
     Checkbox,
     Folder,
     Dropdown,
+    Leftarrow,
+    Useradd,
+    Comments,
 };
 export default icons;

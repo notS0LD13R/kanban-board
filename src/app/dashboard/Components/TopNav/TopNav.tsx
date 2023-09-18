@@ -133,6 +133,7 @@ function LanguageSelector() {
                             key={option.lang}
                             onClick={() => {
                                 setSelected(option);
+                                setActive(false);
                             }}
                         >
                             <Image src={option.flag} alt="" />

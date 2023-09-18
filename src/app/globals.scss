@@ -6,6 +6,7 @@
     --Secondary: #211a75;
     --accent1: #e328af;
     --accent2: #5ecfff;
+    --grey01: #a5a5a5;
 }
 
 //Resets
@@ -22,6 +23,11 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     font-family: var(--major-font);
+}
+
+html {
+    height: 100vh;
+    position: relative;
 }
 
 input {

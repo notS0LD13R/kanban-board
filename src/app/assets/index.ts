@@ -7,5 +7,7 @@ export const flags = {
 };
 
 import profileDP from "./dp.jpg";
-
 export const profile = { profileDP };
+
+import circle from "./circle.png";
+export const topBoard = { circle };
