@@ -1,4 +1,7 @@
-import { AiTwotoneShop as Shop } from "react-icons/ai";
+import {
+    AiTwotoneShop as Shop,
+    AiOutlineArrowRight as Rightarrow,
+} from "react-icons/ai";
 import {
     BiSolidTachometer as Meter,
     BiSolidDownArrow as Dropdown,
@@ -52,5 +55,6 @@ const icons = {
     Plus,
     Dotsmenu,
     Clock,
+    Rightarrow,
 };
 export default icons;

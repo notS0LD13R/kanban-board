@@ -96,6 +96,19 @@ export default function SideNav() {
                     </li>
                 ))}
             </ul>
+            <Card />
         </nav>
+    );
+}
+
+function Card() {
+    return (
+        <div className="nav-card">
+            <div className="grid"></div>
+            <h3>
+                Increase your <br /> work with kanban
+            </h3>
+            <icons.Rightarrow />
+        </div>
     );
 }
