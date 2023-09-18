@@ -80,6 +80,11 @@
                 color: var(--iris);
                 width: 25px;
                 height: 25px;
+
+                &:hover {
+                    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)
+                        both;
+                }
             }
         }
     }
@@ -192,10 +197,31 @@
             }
         }
     }
-}
-@media (max-width: 800px) {
     .icon-group {
         width: 100%;
         justify-content: center;
+    }
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: rotate(-10deg);
+    }
+
+    20%,
+    80% {
+        transform: rotate(10deg);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: rotate(-5deg);
+    }
+
+    40%,
+    60% {
+        transform: rotate(5deg);
     }
 }

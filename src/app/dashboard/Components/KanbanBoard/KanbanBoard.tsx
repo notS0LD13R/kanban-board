@@ -110,7 +110,7 @@ function Columns(props: { head: string; cards: Card_T[] }) {
                 {props.head} <icons.Plus />{" "}
             </h2>
             {props.cards.map((card, index) => (
-                <Card {...card} key={`${card.head}`} />
+                <Card {...card} key={`${card.head}${index}`} />
             ))}
         </div>
     );

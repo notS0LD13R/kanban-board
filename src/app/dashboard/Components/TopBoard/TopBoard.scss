@@ -1,5 +1,5 @@
 .top-board {
-    padding: 30px;
+    padding: min(30px, 5vw);
 
     display: flex;
     flex-direction: column;

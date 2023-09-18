@@ -7,7 +7,7 @@
 }
 
 .dashboard {
-    padding: 50px;
+    padding: min(50px, 7.5vw);
 
     background-color: var(--dark01);
 
