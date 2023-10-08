@@ -1,9 +1,13 @@
+"use client";
+
 import React from "react";
 
 import icons from "@/app/assets/icons";
 
 import { ProgressBar, UsersCircle } from "../TopBoard/TopBoard";
-
+import { v4 as uuid } from "uuid";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 export type Card_T = {
     head: string;
     color: string;
@@ -11,11 +15,28 @@ export type Card_T = {
     progress: number;
     days: number;
     users: any[];
+    id: string;
 };
 
 export default function Card(props: Card_T) {
+    const { setNodeRef, attributes, listeners, transform, transition } =
+        useSortable({
+            id: uuid(),
+        });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
     return (
-        <div className="card">
+        <div
+            className="card"
+            ref={setNodeRef}
+            {...listeners}
+            {...attributes}
+            style={style}
+        >
             <div className="row">
                 <div
                     className="head-circle"

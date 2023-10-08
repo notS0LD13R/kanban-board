@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { DndContext } from "@dnd-kit/core";
+import { v4 as uuid } from "uuid";
+import { Card_T } from "./Card";
 
 import "./KanbanBoard.scss";
-import icons from "@/app/assets/icons";
-
-import Card, { Card_T } from "./Card";
+import Column from "./Column";
 
 type CardGroup_T = {
     card: Card_T;
@@ -14,10 +15,10 @@ type CardGroup_T = {
 
 export default function KanbanBoard() {
     const cols = [
-        { head: "To-Do List" },
-        { head: "In Progress" },
-        { head: "Done" },
-        { head: "Revised" },
+        { head: "To-Do List", id: "To-Do List" },
+        { head: "In Progress", id: "In Progress" },
+        { head: "Done", id: "Done" },
+        { head: "Revised", id: "Revised" },
     ];
     const [cards, setCards] = useState<CardGroup_T[]>([
         {
@@ -28,6 +29,7 @@ export default function KanbanBoard() {
                 progress: 50,
                 users: [{}, {}, {}],
                 days: 10,
+                id: uuid(),
             },
             colID: "To-Do List",
         },
@@ -39,6 +41,7 @@ export default function KanbanBoard() {
                 progress: 50,
                 users: [{}, {}, {}],
                 days: 10,
+                id: uuid(),
             },
             colID: "To-Do List",
         },
@@ -50,6 +53,7 @@ export default function KanbanBoard() {
                 progress: 50,
                 users: [{}, {}, {}],
                 days: 10,
+                id: uuid(),
             },
             colID: "To-Do List",
         },
@@ -61,6 +65,7 @@ export default function KanbanBoard() {
                 progress: 50,
                 users: [{}, {}, {}],
                 days: 10,
+                id: uuid(),
             },
             colID: "In Progress",
         },
@@ -72,6 +77,7 @@ export default function KanbanBoard() {
                 progress: 50,
                 users: [{}, {}, {}],
                 days: 10,
+                id: uuid(),
             },
             colID: "Done",
         },
@@ -83,35 +89,27 @@ export default function KanbanBoard() {
                 progress: 50,
                 users: [{}, {}, {}],
                 days: 10,
+                id: uuid(),
             },
             colID: "Revised",
         },
     ]);
-
+    const handleDragEnd = (e) => {
+        console.log(e);
+    };
     return (
         <div className="kanban-board">
-            {cols.map((col, index) => (
-                <Columns
-                    cards={cards
-                        .filter((card) => card.colID === col.head)
-                        .map((card) => card.card)}
-                    {...col}
-                    key={`kanCol${index}`}
-                />
-            ))}
-        </div>
-    );
-}
-
-function Columns(props: { head: string; cards: Card_T[] }) {
-    return (
-        <div className="col">
-            <h2>
-                {props.head} <icons.Plus />{" "}
-            </h2>
-            {props.cards.map((card, index) => (
-                <Card {...card} key={`${card.head}${index}`} />
-            ))}
+            <DndContext onDragEnd={handleDragEnd}>
+                {cols.map((col, index) => (
+                    <Column
+                        cards={cards
+                            .filter((card) => card.colID === col.head)
+                            .map((card) => card.card)}
+                        {...col}
+                        key={`kanCol${index}`}
+                    />
+                ))}
+            </DndContext>
         </div>
     );
 }
