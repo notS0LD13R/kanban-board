@@ -21,14 +21,15 @@ export default function Column(props: {
     return (
         <SortableContext
             items={props.cards}
+            id={props.id}
             strategy={verticalListSortingStrategy}
         >
             <div className="col" ref={setNodeRef}>
                 <h2>
                     {props.head} <icons.Plus />{" "}
                 </h2>
-                {props.cards.map((card, index) => (
-                    <Card {...card} key={`${card.head}${index}`} />
+                {props.cards.map((card) => (
+                    <Card {...card} key={`${card.id}`} />
                 ))}
             </div>
         </SortableContext>

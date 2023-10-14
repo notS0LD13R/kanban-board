@@ -21,7 +21,7 @@ export type Card_T = {
 export default function Card(props: Card_T) {
     const { setNodeRef, attributes, listeners, transform, transition } =
         useSortable({
-            id: uuid(),
+            id: props.id,
         });
 
     const style = {

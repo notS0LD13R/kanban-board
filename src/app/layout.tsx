@@ -8,8 +8,8 @@ const font1 = Cairo({ subsets: ["latin"], variable: "--major-font" });
 const font2 = Open_Sans({ subsets: ["cyrillic"], variable: "--minor-font" });
 
 export const metadata: Metadata = {
-    title: "Weframe-NextJS",
-    description: "Internship assignment",
+    title: "Kanban Board",
+    description: "Kanban Board for tracking tasks",
 };
 
 export default function RootLayout({

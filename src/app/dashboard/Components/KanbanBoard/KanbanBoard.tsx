@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { DndContext } from "@dnd-kit/core";
+import {
+    DndContext,
+    DragEndEvent,
+    DragOverEvent,
+    closestCenter,
+    closestCorners,
+} from "@dnd-kit/core";
 import { v4 as uuid } from "uuid";
 import { Card_T } from "./Card";
 
@@ -94,12 +100,22 @@ export default function KanbanBoard() {
             colID: "Revised",
         },
     ]);
-    const handleDragEnd = (e) => {
-        console.log(e);
+
+    const handleDragEnd = (e: DragEndEvent) => {
+        const { active, over } = e;
+        console.log("end", active, over);
+    };
+    const handleDragOver = (e: DragOverEvent) => {
+        const { active, over } = e;
+        console.log("over", active, over);
     };
     return (
-        <div className="kanban-board">
-            <DndContext onDragEnd={handleDragEnd}>
+        <DndContext
+            onDragEnd={handleDragEnd}
+            onDragOver={handleDragOver}
+            collisionDetection={closestCorners}
+        >
+            <div className="kanban-board">
                 {cols.map((col, index) => (
                     <Column
                         cards={cards
@@ -109,7 +125,7 @@ export default function KanbanBoard() {
                         key={`kanCol${index}`}
                     />
                 ))}
-            </DndContext>
-        </div>
+            </div>
+        </DndContext>
     );
 }
