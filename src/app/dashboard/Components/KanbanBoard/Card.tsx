@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import icons from "@/app/assets/icons";
 
@@ -19,14 +19,21 @@ export type Card_T = {
 };
 
 export default function Card(props: Card_T) {
-    const { setNodeRef, attributes, listeners, transform, transition } =
-        useSortable({
-            id: props.id,
-        });
+    const {
+        setNodeRef,
+        attributes,
+        listeners,
+        transform,
+        transition,
+        isDragging,
+    } = useSortable({
+        id: props.id,
+    });
 
-    const style = {
+    const style: CSSProperties = {
         transform: CSS.Transform.toString(transform),
         transition,
+        ...(isDragging && { zIndex: 69 }),
     };
 
     return (

@@ -1,23 +1,27 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-    DndContext,
-    DragEndEvent,
-    DragOverEvent,
-    closestCenter,
-    closestCorners,
-} from "@dnd-kit/core";
+import { DndContext, closestCorners } from "@dnd-kit/core";
 import { v4 as uuid } from "uuid";
+
+import { Active, DragEndEvent, DragOverEvent, Over } from "@dnd-kit/core";
+
 import { Card_T } from "./Card";
+import Column from "./Column";
 
 import "./KanbanBoard.scss";
-import Column from "./Column";
 
 type CardGroup_T = {
     card: Card_T;
     colID: string;
 };
+
+function colId(obj: Active | Over) {
+    if (obj.data.current) return obj.data.current.sortable.containerId;
+}
+function cardId(obj: Active | Over) {
+    if (obj.data.current) return obj.data.current.sortable.items[0];
+}
 
 export default function KanbanBoard() {
     const cols = [
@@ -103,12 +107,20 @@ export default function KanbanBoard() {
 
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
-        console.log("end", active, over);
     };
     const handleDragOver = (e: DragOverEvent) => {
         const { active, over } = e;
-        console.log("over", active, over);
+        console.log(active, over);
+
+        if (!active || !over || colId(active) === colId(over)) return;
+
+        const tempCards = [...cards];
+        tempCards.filter((card) => card.card.id === cardId(active))[0].colID =
+            colId(over);
+        setCards(tempCards);
+        console.log(colId(over));
     };
+
     return (
         <DndContext
             onDragEnd={handleDragEnd}
