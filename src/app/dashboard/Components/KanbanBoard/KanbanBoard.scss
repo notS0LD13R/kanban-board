@@ -1,6 +1,6 @@
 .kanban-board {
-    display: flex;
-    // flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     color: white;
 
@@ -12,10 +12,10 @@
     .col {
         display: flex;
         flex-direction: column;
-
+        flex-grow: 1;
         gap: 1rem;
 
-        flex-grow: 1;
+        // padding: 1rem;
         h2 {
             display: flex;
             justify-content: space-between;
@@ -24,6 +24,10 @@
             svg {
                 color: var(--iris);
             }
+        }
+
+        &.is-over {
+            background-color: rgba($color: #ffffff, $alpha: 0.1);
         }
 
         .card {

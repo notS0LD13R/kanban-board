@@ -16,13 +16,6 @@ type CardGroup_T = {
     colID: string;
 };
 
-function colId(obj: Active | Over) {
-    if (obj.data.current) return obj.data.current.sortable.containerId;
-}
-function cardId(obj: Active | Over) {
-    if (obj.data.current) return obj.data.current.sortable.items[0];
-}
-
 export default function KanbanBoard() {
     const cols = [
         { head: "To-Do List", id: "To-Do List" },
@@ -108,18 +101,26 @@ export default function KanbanBoard() {
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
     };
+
     const handleDragOver = (e: DragOverEvent) => {
-        const { active, over } = e;
-        console.log(active, over);
-
+        const { active, over, collisions } = e;
+        console.log(active, over, collisions);
         if (!active || !over || colId(active) === colId(over)) return;
-
-        const tempCards = [...cards];
-        tempCards.filter((card) => card.card.id === cardId(active))[0].colID =
-            colId(over);
-        setCards(tempCards);
-        console.log(colId(over));
+        try {
+            const tempCards = [...cards];
+            tempCards.filter((card) => card.card.id === active.id)[0].colID =
+                colId(over);
+            setCards(tempCards);
+            console.log(colId(over));
+        } catch (err) {
+            console.log(err);
+        }
     };
+
+    function colId(obj: Active | Over) {
+        if (cols.map((col) => col.id).includes(obj.id as string)) return obj.id;
+        if (obj.data.current) return obj.data.current.sortable.containerId;
+    }
 
     return (
         <DndContext

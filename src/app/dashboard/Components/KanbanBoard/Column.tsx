@@ -14,7 +14,7 @@ export default function Column(props: {
     cards: Card_T[];
     id: string;
 }) {
-    const { setNodeRef } = useDroppable({
+    const { setNodeRef, isOver } = useDroppable({
         id: props.id,
     });
 
@@ -24,7 +24,10 @@ export default function Column(props: {
             id={props.id}
             strategy={verticalListSortingStrategy}
         >
-            <div className="col" ref={setNodeRef}>
+            <div
+                className={"col" + (isOver ? " is-over" : "")}
+                ref={setNodeRef}
+            >
                 <h2>
                     {props.head} <icons.Plus />{" "}
                 </h2>
