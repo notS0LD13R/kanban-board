@@ -35,10 +35,6 @@
             }
         }
 
-        &.is-over {
-            background-color: rgba($color: #ffffff, $alpha: 0.1);
-        }
-
         .card {
             display: flex;
             flex-direction: column;
@@ -73,6 +69,36 @@
 
                 h2 {
                     margin-right: auto;
+                }
+            }
+            .card-menu-container {
+                position: relative;
+
+                svg {
+                    cursor: pointer;
+                }
+            }
+            .card-menu {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                position: absolute;
+                right: 0;
+                width: 80px;
+
+                background-color: var(--dark02);
+                border-radius: 0.5rem;
+                overflow: hidden;
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0.5rem;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: var(--Primary);
+                    }
                 }
             }
         }

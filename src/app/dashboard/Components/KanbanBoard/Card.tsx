@@ -1,14 +1,16 @@
 "use client";
 
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useState } from "react";
 
 import icons from "@/app/assets/icons";
 
 import { ProgressBar, UsersCircle } from "../TopBoard/TopBoard";
-import { v4 as uuid } from "uuid";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { calculateDaysDifference } from "./utils";
+import { useKanban } from "./KanbanBoard";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+
 export type Card_T = {
     head: string;
     color: string;
@@ -18,8 +20,14 @@ export type Card_T = {
     users: any[];
     id: string;
 };
+type CardMenu_T = {
+    active: boolean;
+    handleDelete: () => void;
+};
 
 export default function Card(props: Card_T) {
+    const [state, setState] = useState<"menu" | "edit" | null>(null);
+
     const {
         setNodeRef,
         attributes,
@@ -29,6 +37,7 @@ export default function Card(props: Card_T) {
         isDragging,
     } = useSortable({
         id: props.id,
+        disabled: !!state,
     });
 
     const style: CSSProperties = {
@@ -36,7 +45,7 @@ export default function Card(props: Card_T) {
         transition,
         ...(isDragging && { zIndex: 69 }),
     };
-
+    const { handleCardDelete, handleCardEdit } = useKanban()!;
     return (
         <div
             className="card"
@@ -51,7 +60,19 @@ export default function Card(props: Card_T) {
                     style={{ backgroundColor: props.color }}
                 />
                 <h2>{props.head}</h2>
-                <icons.Dotsmenu />
+                <div className="card-menu-container">
+                    <icons.Dotsmenu
+                        onMouseDown={() =>
+                            setState((state) =>
+                                state === "menu" ? null : "menu"
+                            )
+                        }
+                    />
+                    <CardMenu
+                        active={state === "menu"}
+                        handleDelete={() => handleCardDelete(props.id)}
+                    />
+                </div>
             </div>
             <p>{props.para}</p>
             <div className="progress-container">
@@ -60,12 +81,28 @@ export default function Card(props: Card_T) {
 
             <div className="row">
                 <UsersCircle users={props.users} />
-
                 <span className="lesser-text">
                     <icons.Clock />{" "}
                     {calculateDaysDifference(props.created_date)} more days
                 </span>
             </div>
+        </div>
+    );
+}
+
+function CardMenu(props: CardMenu_T) {
+    if (!props.active) return <></>;
+    return (
+        <div className="card-menu">
+            <span>
+                {" "}
+                <AiFillEdit /> Edit
+            </span>
+            <span onClick={props.handleDelete}>
+                {" "}
+                <AiFillDelete />
+                Delete
+            </span>
         </div>
     );
 }
