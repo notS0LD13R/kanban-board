@@ -6,7 +6,7 @@ import KanbanBoard from "./Components/KanbanBoard/KanbanBoard";
 export default function Home() {
     return (
         <main className="dashboard">
-            <TopBoard />
+            {/* <TopBoard /> */}
             <KanbanBoard />
         </main>
     );

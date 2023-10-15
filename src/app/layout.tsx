@@ -20,8 +20,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={font1.variable + " " + font2.variable}>
-                {" "}
-                <SideNav /> {children}
+                {children}
             </body>
         </html>
     );

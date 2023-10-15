@@ -1,6 +1,7 @@
 import "./page.scss";
 
 import TopNav from "./Components/TopNav/TopNav";
+import SideNav from "../Components/SideNav/SideNav";
 
 export default function RootLayout({
     children,
@@ -8,9 +9,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <section className="dashboard-layout">
-            <TopNav />
-            {children}
-        </section>
+        <>
+            <SideNav />
+            <section className="dashboard-layout">
+                <TopNav />
+                {children}
+            </section>
+        </>
     );
 }
