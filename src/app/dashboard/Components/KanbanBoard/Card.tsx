@@ -8,12 +8,13 @@ import { ProgressBar, UsersCircle } from "../TopBoard/TopBoard";
 import { v4 as uuid } from "uuid";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { calculateDaysDifference } from "./utils";
 export type Card_T = {
     head: string;
     color: string;
     para: string;
     progress: number;
-    days: number;
+    created_date: Date;
     users: any[];
     id: string;
 };
@@ -61,7 +62,8 @@ export default function Card(props: Card_T) {
                 <UsersCircle users={props.users} />
 
                 <span className="lesser-text">
-                    <icons.Clock /> {props.days} more days
+                    <icons.Clock />{" "}
+                    {calculateDaysDifference(props.created_date)} more days
                 </span>
             </div>
         </div>

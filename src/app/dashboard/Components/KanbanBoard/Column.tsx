@@ -29,7 +29,7 @@ export default function Column(props: {
                 ref={setNodeRef}
             >
                 <h2>
-                    {props.head} <icons.Plus />{" "}
+                    {props.head} {props.id === "To-Do List" && <icons.Plus />}{" "}
                 </h2>
                 {props.cards.map((card) => (
                     <Card {...card} key={`${card.id}`} />

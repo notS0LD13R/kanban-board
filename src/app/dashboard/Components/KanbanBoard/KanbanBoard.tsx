@@ -36,7 +36,7 @@ export default function KanbanBoard() {
                 para: "Create sign up sheet for holiday student/parent conferences.",
                 progress: 50,
                 users: [{}, {}, {}],
-                days: 10,
+                created_date: new Date("10-14-2023"),
                 id: uuid(),
             },
             colID: "To-Do List",
@@ -48,7 +48,7 @@ export default function KanbanBoard() {
                 para: "Create sign up sheet for holiday student/parent conferences.",
                 progress: 50,
                 users: [{}, {}, {}],
-                days: 10,
+                created_date: new Date("10-13-2023"),
                 id: uuid(),
             },
             colID: "To-Do List",
@@ -60,7 +60,7 @@ export default function KanbanBoard() {
                 para: "Create sign up sheet for holiday student/parent conferences.",
                 progress: 50,
                 users: [{}, {}, {}],
-                days: 10,
+                created_date: new Date("10-12-2023"),
                 id: uuid(),
             },
             colID: "To-Do List",
@@ -72,7 +72,7 @@ export default function KanbanBoard() {
                 para: "Create sign up sheet for holiday student/parent conferences.",
                 progress: 50,
                 users: [{}, {}, {}],
-                days: 10,
+                created_date: new Date("10-11-2023"),
                 id: uuid(),
             },
             colID: "In Progress",
@@ -84,7 +84,7 @@ export default function KanbanBoard() {
                 para: "Create sign up sheet for holiday student/parent conferences.",
                 progress: 50,
                 users: [{}, {}, {}],
-                days: 10,
+                created_date: new Date("10-10-2023"),
                 id: uuid(),
             },
             colID: "Done",
@@ -96,12 +96,28 @@ export default function KanbanBoard() {
                 para: "Create sign up sheet for holiday student/parent conferences.",
                 progress: 50,
                 users: [{}, {}, {}],
-                days: 10,
+                created_date: new Date("10-14-2023"),
                 id: uuid(),
             },
             colID: "Revised",
         },
     ]);
+    const colors = ["#FFAB2D", "#5ECFFF", "#FF4A55", "#38E25D"];
+    const handleCardAdd = () => {
+        const template = {
+            card: {
+                head: "Enter Heading",
+                color: colors[Math.floor(Math.random()) * colors.length],
+                para: "Enter description",
+                progress: 10,
+                users: [{}],
+                created_date: new Date(),
+                id: uuid(),
+            },
+            colID: "To-Do List",
+        };
+        setCards;
+    };
 
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
