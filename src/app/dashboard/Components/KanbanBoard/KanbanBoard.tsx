@@ -1,11 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { DndContext, closestCorners } from "@dnd-kit/core";
 import { v4 as uuid } from "uuid";
-
-import { Active, DragEndEvent, DragOverEvent, Over } from "@dnd-kit/core";
-
+import {
+    Active,
+    DragEndEvent,
+    DragOverEvent,
+    Over,
+    DndContext,
+    closestCorners,
+} from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import { Card_T } from "./Card";
 import Column from "./Column";
 
@@ -100,6 +105,10 @@ export default function KanbanBoard() {
 
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
+        if (active && over)
+            setCards((cards) =>
+                arrayMove(cards, cardPos(active), cardPos(over))
+            );
     };
 
     const handleDragOver = (e: DragOverEvent) => {
@@ -120,6 +129,9 @@ export default function KanbanBoard() {
     function colId(obj: Active | Over) {
         if (cols.map((col) => col.id).includes(obj.id as string)) return obj.id;
         if (obj.data.current) return obj.data.current.sortable.containerId;
+    }
+    function cardPos(obj: Active | Over) {
+        return cards.findIndex((card) => card.card.id === obj.id);
     }
 
     return (
