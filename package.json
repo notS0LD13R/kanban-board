@@ -1,33 +1,33 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@dnd-kit/core": "^6.0.8",
-    "@dnd-kit/sortable": "^7.0.2",
-    "@dnd-kit/utilities": "^3.2.1",
-    "@prisma/client": "^5.4.2",
-    "@types/node": "20.6.2",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "@types/uuid": "^9.0.5",
-    "eslint": "8.49.0",
-    "eslint-config-next": "13.4.19",
-    "next": "^13.5.4",
-    "prisma": "^5.4.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.11.0",
-    "react-select": "^5.7.4",
-    "sass": "^1.67.0",
-    "sharp": "^0.32.6",
-    "typescript": "5.2.2",
-    "uuid": "^9.0.1"
-  }
+    "name": "my-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build && prisma generate",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@dnd-kit/core": "^6.0.8",
+        "@dnd-kit/sortable": "^7.0.2",
+        "@dnd-kit/utilities": "^3.2.1",
+        "@prisma/client": "^5.4.2",
+        "@types/node": "20.6.2",
+        "@types/react": "18.2.21",
+        "@types/react-dom": "18.2.7",
+        "@types/uuid": "^9.0.5",
+        "eslint": "8.49.0",
+        "eslint-config-next": "13.4.19",
+        "next": "^13.5.4",
+        "prisma": "^5.4.2",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-icons": "^4.11.0",
+        "react-select": "^5.7.4",
+        "sass": "^1.67.0",
+        "sharp": "^0.32.6",
+        "typescript": "5.2.2",
+        "uuid": "^9.0.1"
+    }
 }
