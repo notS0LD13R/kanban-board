@@ -16,9 +16,10 @@ export async function GET() {
     } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError)
             return NextResponse.json({ error: err.message }, { status: 400 });
+        else
+            return NextResponse.json(
+                { error: `Unknown Error ${err}` },
+                { status: 400 }
+            );
     }
-    return NextResponse.json(
-        { weird: "You shouldn't be here" },
-        { status: 500 }
-    );
 }

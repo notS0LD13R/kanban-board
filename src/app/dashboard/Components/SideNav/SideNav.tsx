@@ -5,7 +5,7 @@ import { IconType } from "react-icons/lib/esm/iconBase";
 
 import "./SideNav.scss";
 
-import icons from "../../assets/icons";
+import icons from "../../../assets/icons";
 
 type link_T = {
     label: string;

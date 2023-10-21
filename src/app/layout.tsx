@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Cairo, Open_Sans } from "next/font/google";
 
-import "./globals.scss";
+import "./global.css";
 
 const font1 = Cairo({ subsets: ["latin"], variable: "--major-font" });
 const font2 = Open_Sans({ subsets: ["cyrillic"], variable: "--minor-font" });
@@ -16,9 +16,18 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    console.log(font1, font2);
     return (
         <html lang="en">
-            <body className={font1.variable + " " + font2.variable}>
+            <body
+                className={
+                    font1.variable +
+                    " " +
+                    font2.variable +
+                    " __variable_ec6999" +
+                    " __variable_4297f9"
+                }
+            >
                 {children}
             </body>
         </html>

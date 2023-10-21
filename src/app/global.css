@@ -9,8 +9,6 @@
     --grey01: #a5a5a5;
 }
 
-//Resets
-
 * {
     box-sizing: border-box;
     padding: 0;
@@ -39,8 +37,6 @@ input {
     -moz-box-shadow: none;
     box-shadow: none;
 }
-
-//Common
 
 body {
     display: flex;
