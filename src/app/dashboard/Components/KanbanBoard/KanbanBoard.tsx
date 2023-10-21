@@ -132,7 +132,6 @@ export default function KanbanBoard() {
     };
 
     const handleCardDelete = (cardId: string) => {
-        console.log(cards.filter((card) => card.card.id !== cardId));
         setCards((cards) => cards.filter((card) => card.card.id !== cardId));
     };
 
@@ -198,7 +197,6 @@ export default function KanbanBoard() {
         handleCardEdit: handleCardEdit,
         handleCardDelete: handleCardDelete,
     };
-    console.log(cards.length);
     return (
         <KanbanContext.Provider value={contextValues}>
             <DndContext

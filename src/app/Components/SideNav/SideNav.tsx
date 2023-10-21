@@ -74,7 +74,7 @@ export default function SideNav() {
     return (
         <nav className={`side-nav ${active ? "active" : ""}`}>
             <div className="nav-head">
-                <span>weframetech</span>
+                <span>Kanban Board</span>
                 <icons.Menu onClick={() => setActive(!active)} />
             </div>
             <ul>
