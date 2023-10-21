@@ -12,13 +12,13 @@ export async function GET() {
                 password: "123",
             },
         });
-        return new Response(JSON.stringify({ payload: users }), {
-            status: 200,
-        });
+        return NextResponse.json({ payload: users }, { status: 200 });
     } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError)
-            return new Response(JSON.stringify({ error: err.message }), {
-                status: 400,
-            });
+            return NextResponse.json({ error: err.message }, { status: 400 });
     }
+    return NextResponse.json(
+        { weird: "You shouldn't be here" },
+        { status: 500 }
+    );
 }
