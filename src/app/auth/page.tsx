@@ -1,6 +1,7 @@
 "use client";
 import { CSSProperties, useMemo, useRef, useState, MouseEvent } from "react";
 import OutlineText from "./Components/OutlineText/OutlineText";
+import Card from "./Components/Card/Card";
 import "./page.scss";
 
 export default function Auth() {
@@ -10,6 +11,7 @@ export default function Auth() {
         "--offsetX": "0%",
         "--offsetY": "0%",
     });
+    const [isRegister, setIsRegister] = useState(false);
     const ref = useRef<HTMLDivElement | null>(null);
 
     const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -26,11 +28,25 @@ export default function Auth() {
             });
         }
     };
-    console.log(offset);
     return (
         <main className="auth" ref={ref} onMouseMove={handleMouseMove}>
-            <OutlineText text={text} style={spacing} offset={offset} />
-            <OutlineText text={text} style={spacing} offset={offset} />
+            <div className="bg-text">
+                <OutlineText text={text} style={spacing} offset={offset} />
+                <OutlineText text={text} style={spacing} offset={offset} />
+            </div>
+            <div className=" card-stack">
+                <Card
+                    isRegister={false}
+                    handleSwitch={() => setIsRegister(false)}
+                    className={isRegister ? "front" : "back"}
+                />
+                {/* Register */}
+                <Card
+                    isRegister={true}
+                    handleSwitch={() => setIsRegister(true)}
+                    className={isRegister ? "back" : "front"}
+                />
+            </div>
         </main>
     );
 }

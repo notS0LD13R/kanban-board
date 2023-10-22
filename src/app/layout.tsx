@@ -3,7 +3,11 @@ import { Cairo, Open_Sans } from "next/font/google";
 
 import "./global.css";
 
-const font1 = Cairo({ subsets: ["latin"], variable: "--major-font" });
+const font1 = Cairo({
+    subsets: ["latin"],
+    variable: "--major-font",
+    weight: ["400", "500", "600", "700", "800", "900"],
+});
 const font2 = Open_Sans({ subsets: ["cyrillic"], variable: "--minor-font" });
 
 export const metadata: Metadata = {

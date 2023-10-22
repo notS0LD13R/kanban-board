@@ -1,10 +1,31 @@
 .auth {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
     background-color: var(--dark01);
     width: 100%;
 
-    padding: 1rem 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+
+    .bg-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+    }
+
+    .card-stack {
+        z-index: 2;
+        position: relative;
+        width: min(400px, 90vw);
+        height: 65vh;
+
+        &:has(u:hover) > .back {
+            transition: transform 0.25s;
+            transform: rotate(-5deg);
+        }
+    }
 }
