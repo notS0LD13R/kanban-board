@@ -21,7 +21,7 @@
         z-index: 2;
         position: relative;
         width: min(400px, 90vw);
-        height: 65vh;
+        height: 500px;
 
         &:has(u:hover) > .back {
             transition: transform 0.25s;

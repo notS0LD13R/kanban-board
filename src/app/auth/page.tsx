@@ -11,19 +11,19 @@ export default function Auth() {
         "--offsetX": "0%",
         "--offsetY": "0%",
     });
-    const [isRegister, setIsRegister] = useState(false);
+    const [currCard, setCurrCard] = useState<"login" | "register">("login");
     const ref = useRef<HTMLDivElement | null>(null);
 
     const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
         if (ref) {
             setOffset({
                 "--offsetX": `${(
-                    (15 * e.clientX) / ref.current!.clientWidth -
-                    7.5
+                    (10 * e.clientX) / ref.current!.clientWidth -
+                    5
                 ).toFixed(2)}%`,
                 "--offsetY": `${(
-                    (15 * e.clientY) / ref.current!.clientHeight -
-                    7.5
+                    (10 * e.clientY) / ref.current!.clientHeight -
+                    5
                 ).toFixed(2)}%`,
             });
         }
@@ -37,14 +37,14 @@ export default function Auth() {
             <div className=" card-stack">
                 <Card
                     isRegister={false}
-                    handleSwitch={() => setIsRegister(false)}
-                    className={isRegister ? "front" : "back"}
+                    handleSwitch={() => setCurrCard("register")}
+                    className={currCard == "login" ? "front" : "back"}
                 />
                 {/* Register */}
                 <Card
                     isRegister={true}
-                    handleSwitch={() => setIsRegister(true)}
-                    className={isRegister ? "back" : "front"}
+                    handleSwitch={() => setCurrCard("login")}
+                    className={currCard === "register" ? "front" : "back"}
                 />
             </div>
         </main>

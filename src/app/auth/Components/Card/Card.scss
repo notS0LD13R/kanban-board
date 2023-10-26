@@ -5,7 +5,7 @@
     background-color: var(--Secondary);
 
     font-family: var(--major-font);
-    padding: 2rem;
+    padding: min(2rem, 5vw);
     border-radius: 0.5rem;
     color: white;
 
@@ -34,8 +34,24 @@
     .input-container {
         flex: 1;
         justify-content: center;
-        gap: 1rem;
+        gap: 2rem;
         width: 100%;
+        // input.error {
+        //     outline: 0.5px red solid;
+        //     outline-offset: 2.5px;
+        // }
+        .input-pair {
+            width: 100%;
+            position: relative;
+            .error-msg {
+                font-size: 0.75rem;
+                opacity: 1;
+                position: absolute;
+                top: -1.5rem;
+                color: red;
+            }
+        }
+
         input[type="text"],
         input[type="password"] {
             background-color: var(--dark02);
@@ -85,7 +101,7 @@
     &.front,
     &.back {
         transform-origin: top left;
-        transition: all 1s;
+        transition: transform 0.5s;
     }
 
     &.front {
@@ -93,12 +109,10 @@
 
         animation: front-to-back 1s ease-in-out;
 
-        box-shadow: 0px 0px 28px -1px hsla(245, 50%, 9%, 0.502);
+        box-shadow: 0px 0px 28px -1px rgba(13, 11, 34, 0.502);
     }
     &.back {
         z-index: 5;
-
-        animation: back-to-front 1s ease-in-out;
     }
 }
 .flex-col {

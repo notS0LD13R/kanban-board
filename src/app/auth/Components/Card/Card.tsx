@@ -12,11 +12,42 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
     const {
         register,
         handleSubmit,
+        setError,
+        reset,
         formState: { errors },
-    } = useForm({});
+    } = useForm({
+        defaultValues: {
+            email: "",
+            password: "",
+            ...(isRegister && { confirm_password: "" }),
+        },
+    });
+
+    const handleValidation = (values: { [key: string]: string }) => {
+        const emailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+        let isError = false;
+        if (!emailReg.test(values.email)) {
+            isError = true;
+            setError("email", { message: "Invalid email" });
+        }
+        if (values.password === "") {
+            isError = true;
+            setError("password", { message: "Invalid password" });
+        } else if (isRegister) {
+            if (!(values.password === values.confirm_password)) {
+                isError = true;
+                setError("confirm_password", { message: "Password mismatch" });
+            }
+        }
+
+        return isError;
+    };
+
     const onSubmit = handleSubmit((values) => {
+        if (handleValidation(values)) return;
         console.log(values);
     });
+
     return (
         <div className={`auth-card flex-col ${className}`}>
             <div className="flex-col">
@@ -25,22 +56,41 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
             </div>
             <form onSubmit={onSubmit} className="flex-col">
                 <div className="input-container flex-col">
-                    <input
-                        type="text"
-                        {...register("email")}
-                        placeholder="Email"
-                    />
-                    <input
-                        type="password"
-                        {...register("password")}
-                        placeholder="Password"
-                    />
-                    {isRegister && (
+                    <div className="input-pair">
+                        <span className="error-msg">
+                            {errors.email?.message}
+                        </span>
+                        <input
+                            type="text"
+                            {...register("email")}
+                            placeholder="Email"
+                            className={errors.email && "error"}
+                        />
+                    </div>
+                    <div className="input-pair">
+                        <span className="error-msg">
+                            {errors.password?.message}
+                        </span>
                         <input
                             type="password"
-                            {...register("confirm-password")}
-                            placeholder="Confirm Password"
+                            {...register("password")}
+                            placeholder="Password"
+                            className={errors.password && "error"}
                         />
+                    </div>
+
+                    {isRegister && (
+                        <div className="input-pair">
+                            <span className="error-msg">
+                                {errors.confirm_password?.message}
+                            </span>
+                            <input
+                                type="password"
+                                {...register("confirm_password")}
+                                placeholder="Confirm Password"
+                                className={errors.confirm_password && "error"}
+                            />
+                        </div>
                     )}
                 </div>
                 <div className="button-container flex-col">
@@ -49,14 +99,29 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
                         value={isRegister ? "REGISTER" : "LOGIN"}
                     />
                     <span>
-                        {isRegister ? (
+                        {!isRegister ? (
                             <>
-                                New here? <u onClick={handleSwitch}>Register</u>
+                                New here?{" "}
+                                <u
+                                    onClick={() => {
+                                        reset();
+                                        handleSwitch();
+                                    }}
+                                >
+                                    Register
+                                </u>
                             </>
                         ) : (
                             <>
                                 Already have an account?{" "}
-                                <u onClick={handleSwitch}>Login</u>
+                                <u
+                                    onClick={() => {
+                                        reset();
+                                        handleSwitch();
+                                    }}
+                                >
+                                    Login
+                                </u>
                             </>
                         )}
                     </span>
