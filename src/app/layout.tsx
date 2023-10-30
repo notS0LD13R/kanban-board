@@ -20,7 +20,6 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    console.log(font1, font2);
     return (
         <html lang="en">
             <body

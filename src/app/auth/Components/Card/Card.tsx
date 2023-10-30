@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./Card.scss";
+import { register } from "../../services/api";
 
 type props_T = {
     isRegister: boolean;
@@ -10,7 +11,7 @@ type props_T = {
 
 export default function Card({ className, handleSwitch, isRegister }: props_T) {
     const {
-        register,
+        register: registerForm,
         handleSubmit,
         setError,
         reset,
@@ -45,7 +46,8 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
 
     const onSubmit = handleSubmit((values) => {
         if (handleValidation(values)) return;
-        console.log(values);
+        if (isRegister)
+            register({ email: values.email, password: values.password });
     });
 
     return (
@@ -62,7 +64,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
                         </span>
                         <input
                             type="text"
-                            {...register("email")}
+                            {...registerForm("email")}
                             placeholder="Email"
                             className={errors.email && "error"}
                         />
@@ -73,7 +75,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
                         </span>
                         <input
                             type="password"
-                            {...register("password")}
+                            {...registerForm("password")}
                             placeholder="Password"
                             className={errors.password && "error"}
                         />
@@ -86,7 +88,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
                             </span>
                             <input
                                 type="password"
-                                {...register("confirm_password")}
+                                {...registerForm("confirm_password")}
                                 placeholder="Confirm Password"
                                 className={errors.confirm_password && "error"}
                             />
