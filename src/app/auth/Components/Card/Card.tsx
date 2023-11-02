@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./Card.scss";
-import { register } from "../../services/api";
+import { login, register } from "../../services/api";
 
 type props_T = {
     isRegister: boolean;
@@ -48,6 +48,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
         if (handleValidation(values)) return;
         if (isRegister)
             register({ email: values.email, password: values.password });
+        else login({ email: values.email, password: values.password });
     });
 
     return (

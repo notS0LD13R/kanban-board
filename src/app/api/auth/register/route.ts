@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { loginReq } from "../../types";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { createToken, verifyToken } from "../utils/jwt";
+import { createToken } from "../utils/jwt";
+import prisma from "../utils/prisma";
 
 export async function POST(request: NextRequest) {
     try {
         const req: loginReq = await request.json();
-        const prisma = new PrismaClient();
+
         const res = await prisma.user.create({
             data: {
                 email: req.email,
@@ -15,24 +15,25 @@ export async function POST(request: NextRequest) {
                 username: req.email.split("@")[0],
             },
         });
-        console.log(res);
-        const accessToken = createToken({ id: res.id });
+
         return NextResponse.json(
             {
                 message: "User registered",
-                payload: { access_token: accessToken },
+                payload: {
+                    accessToken: createToken({ id: res.id }),
+                    refreshToken: createToken({ id: res.id }, "1d", true),
+                },
             },
             { status: 200 }
         );
     } catch (error) {
+        console.log(error);
         const response = { message: "User registeration failed", status: 500 };
         if (error instanceof PrismaClientKnownRequestError) {
             if (error.code === "P2002") {
-                // Unique constraint violation (e.g., email already exists)
                 response.message = "Email already in use";
                 response.status = 409;
             } else if (error.code === "P2025") {
-                // Invalid data provided (e.g., required fields missing)
                 response.message = "Invalid user data";
                 response.status = 400;
             }
