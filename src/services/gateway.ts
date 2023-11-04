@@ -1,5 +1,4 @@
 import axios from "axios";
-import { cookies } from "next/headers";
 const gateway = axios.create({
     baseURL: "api/",
     headers: {

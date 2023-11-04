@@ -141,12 +141,13 @@ export default function KanbanBoard() {
             const selectedCardPos = cards.findIndex(
                 (card) => card.card.id === cardId
             );
+
             //replace all the values from newValues in selectedCard
             cards[selectedCardPos].card = {
                 ...cards[selectedCardPos].card,
                 ...newValues,
             };
-            return cards;
+            return [...cards];
         });
     };
 
@@ -197,6 +198,7 @@ export default function KanbanBoard() {
         handleCardEdit: handleCardEdit,
         handleCardDelete: handleCardDelete,
     };
+
     return (
         <KanbanContext.Provider value={contextValues}>
             <DndContext

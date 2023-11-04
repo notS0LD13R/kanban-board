@@ -44,6 +44,19 @@
             padding: 1rem;
             border-radius: 1rem;
 
+            input {
+                color: inherit;
+                font: inherit;
+                width: 100%;
+            }
+            textarea {
+                color: inherit;
+                background-color: transparent;
+                font: inherit;
+                width: 100%;
+                height: 100%;
+            }
+
             .progress-container {
                 width: 200px;
                 position: relative;
@@ -60,6 +73,7 @@
                 height: 10px;
                 border-radius: 50%;
                 margin-right: 10px;
+                flex-shrink: 0;
             }
 
             .row {
@@ -77,14 +91,27 @@
                 svg {
                     cursor: pointer;
                 }
+                .edit-check {
+                    &:hover {
+                        color: greenyellow;
+                        filter: none;
+                    }
+                }
+                .edit-reset {
+                    &:hover {
+                        color: red;
+                        filter: none;
+                    }
+                }
             }
+
             .card-menu {
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
                 position: absolute;
-                right: 0;
-                width: 80px;
+                right: -75%;
+                width: fit-content;
 
                 z-index: 6;
 
