@@ -9,8 +9,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { calculateDaysDifference } from "./utils";
 import { useKanban } from "./KanbanBoard";
-import { AiFillDelete, AiFillEdit, AiOutlineCheck } from "react-icons/ai";
-import { BiCheck, BiCross, BiX } from "react-icons/bi";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { BiCheck, BiX } from "react-icons/bi";
 
 export type Card_T = {
     head: string;
