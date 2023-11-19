@@ -20,14 +20,14 @@ export async function POST(request: NextRequest) {
             {
                 message: "User registered",
                 payload: {
-                    accessToken: createToken({ id: res.id }),
-                    refreshToken: createToken({ id: res.id }, "1d", true),
+                    accessToken: await createToken({ id: res.id }),
+                    refreshToken: await createToken({ id: res.id }, "1d", true),
                 },
             },
             { status: 200 }
         );
     } catch (error) {
-        console.log(error);
+        // console.log("register:", error);
         const response = { message: "User registeration failed", status: 500 };
         if (error instanceof PrismaClientKnownRequestError) {
             if (error.code === "P2002") {

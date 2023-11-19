@@ -16,12 +16,11 @@ gateway.interceptors.request.use(
 
 gateway.interceptors.response.use(
     (response) => {
-        console.log(response);
         return response;
     },
     (err) => {
         if (err.status === 469) {
-            console.log(err.message);
+            // console.log("gateway", err.message);
         }
 
         return Promise.reject(err);

@@ -1,4 +1,3 @@
-import { sign, verify } from "jsonwebtoken";
 import { SignJWT, jwtVerify } from "jose";
 
 /**
@@ -13,11 +12,11 @@ export async function createToken(
 ) {
     const key = getKey(refresh);
 
-    if (!refresh) throw new Error("private key missing");
+    // if (!refresh) throw new Error("private key missing");
 
     const token = await new SignJWT(data)
         .setProtectedHeader({ alg: "HS256" })
-        .setExpirationTime(expiresIn || "60s")
+        .setExpirationTime(expiresIn || "5m")
         .sign(key);
 
     return token;

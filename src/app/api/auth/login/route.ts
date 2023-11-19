@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
             {
                 message: "User Logged In",
                 payload: {
-                    accessToken: createToken({ id: res.id }),
-                    refreshToken: createToken({ id: res.id }, "1d", true),
+                    accessToken: await createToken({ id: res.id }),
+                    refreshToken: await createToken({ id: res.id }, "1d", true),
                 },
             },
             { status: 200 }

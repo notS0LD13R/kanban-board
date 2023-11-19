@@ -6,14 +6,13 @@ import { stat } from "fs";
 export async function middleware(request: NextRequest) {
     const exempt = ["/api/auth"];
     const access = request.headers.get("authorization")?.split(" ")[1];
-    console.log(request.nextUrl.pathname);
+
     if (
         exempt.reduce(
             (acc, curr) => acc && !request.nextUrl.pathname.startsWith(curr),
             true
         )
     ) {
-        console.log(access);
         if (!access)
             return NextResponse.json(
                 {
