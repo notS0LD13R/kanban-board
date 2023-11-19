@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { loginReq } from "../../types";
+import { loginReq } from "../../utils/types";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { createToken } from "../../utils/jwt";
 import prisma from "../../utils/prisma";
@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
             { status: 200 }
         );
     } catch (error) {
-        // console.log("register:", error);
         const response = { message: "User registeration failed", status: 500 };
         if (error instanceof PrismaClientKnownRequestError) {
             if (error.code === "P2002") {

@@ -20,7 +20,8 @@ gateway.interceptors.response.use(
     },
     (err) => {
         if (err.status === 469) {
-            // console.log("gateway", err.message);
+            const { config } = err;
+            console.log(config);
         }
 
         return Promise.reject(err);

@@ -16,7 +16,7 @@ export async function createToken(
 
     const token = await new SignJWT(data)
         .setProtectedHeader({ alg: "HS256" })
-        .setExpirationTime(expiresIn || "1h")
+        .setExpirationTime(expiresIn || "1m")
         .sign(key);
 
     return token;

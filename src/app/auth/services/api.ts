@@ -1,4 +1,4 @@
-import gateway from "@/services/gateway";
+import gateway, { setTokens } from "@/services/gateway";
 import { authRoutes } from "@/services/routes";
 import { Axios, AxiosError } from "axios";
 
@@ -18,6 +18,7 @@ export async function register({
             email: email,
             password: password,
         });
+        setTokens(res.data.payload.refreshToken, res.data.payload.accessToken);
         if (success) success((res as any).data.message as string);
     } catch (err) {
         if (err instanceof AxiosError)
@@ -41,7 +42,7 @@ export async function login({
             email: email,
             password: password,
         });
-
+        setTokens(res.data.payload.refreshToken, res.data.payload.accessToken);
         if (success) success((res as any).response.data.message as string);
     } catch (err) {
         if (error) error((err as any).response.data.message as string);

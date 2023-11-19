@@ -6,7 +6,6 @@ import { verifyToken } from "../utils/jwt";
 export async function GET(request: NextRequest) {
     const access = request.headers.get("authorization")?.split(" ")[1];
     const id = ((await verifyToken(access!)) as { id: string }).id;
-    console.log({ id: id! });
     try {
         const user = await prisma.user.findUnique({
             where: { id: id! },
