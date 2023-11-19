@@ -21,6 +21,7 @@
         "axios": "^1.5.1",
         "eslint": "8.49.0",
         "eslint-config-next": "13.4.19",
+        "jose": "^5.1.0",
         "jsonwebtoken": "^9.0.2",
         "next": "^13.5.4",
         "prisma": "^5.4.2",
@@ -31,6 +32,7 @@
         "react-select": "^5.7.4",
         "sass": "^1.67.0",
         "sharp": "^0.32.6",
+        "sonner": "^1.2.0",
         "typescript": "5.2.2",
         "uuid": "^9.0.1"
     }

@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./Card.scss";
 import { login, register } from "../../services/api";
+import { Toaster, toast } from "sonner";
 
 type props_T = {
     isRegister: boolean;
@@ -43,93 +44,113 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
 
         return isError;
     };
-
+    const errorHandler = (msg: string) => {
+        toast.error(msg);
+    };
+    const successHandler = (msg: string) => {
+        toast.success(msg);
+    };
     const onSubmit = handleSubmit((values) => {
         if (handleValidation(values)) return;
         if (isRegister)
-            register({ email: values.email, password: values.password });
-        else login({ email: values.email, password: values.password });
+            register({
+                email: values.email,
+                password: values.password,
+                success: successHandler,
+                error: errorHandler,
+            });
+        else
+            login({
+                email: values.email,
+                password: values.password,
+                error: errorHandler,
+            });
     });
 
     return (
-        <div className={`auth-card flex-col ${className}`}>
-            <div className="flex-col">
-                <h2>{isRegister ? "Get started" : "Welcome back"}</h2>
-                <span>Enter your email & password</span>
-            </div>
-            <form onSubmit={onSubmit} className="flex-col">
-                <div className="input-container flex-col">
-                    <div className="input-pair">
-                        <span className="error-msg">
-                            {errors.email?.message}
-                        </span>
-                        <input
-                            type="text"
-                            {...registerForm("email")}
-                            placeholder="Email"
-                            className={errors.email && "error"}
-                        />
-                    </div>
-                    <div className="input-pair">
-                        <span className="error-msg">
-                            {errors.password?.message}
-                        </span>
-                        <input
-                            type="password"
-                            {...registerForm("password")}
-                            placeholder="Password"
-                            className={errors.password && "error"}
-                        />
-                    </div>
-
-                    {isRegister && (
+        <>
+            <Toaster richColors />
+            <div className={`auth-card flex-col ${className}`}>
+                <div className="flex-col">
+                    <h2>{isRegister ? "Get started" : "Welcome back"}</h2>
+                    <span>Enter your email & password</span>
+                </div>
+                <form onSubmit={onSubmit} className="flex-col">
+                    <div className="input-container flex-col">
                         <div className="input-pair">
                             <span className="error-msg">
-                                {errors.confirm_password?.message}
+                                {errors.email?.message}
+                            </span>
+                            <input
+                                type="text"
+                                {...registerForm("email")}
+                                placeholder="Email"
+                                className={errors.email && "error"}
+                            />
+                        </div>
+                        <div className="input-pair">
+                            <span className="error-msg">
+                                {errors.password?.message}
                             </span>
                             <input
                                 type="password"
-                                {...registerForm("confirm_password")}
-                                placeholder="Confirm Password"
-                                className={errors.confirm_password && "error"}
+                                {...registerForm("password")}
+                                placeholder="Password"
+                                className={errors.password && "error"}
                             />
                         </div>
-                    )}
-                </div>
-                <div className="button-container flex-col">
-                    <input
-                        type="submit"
-                        value={isRegister ? "REGISTER" : "LOGIN"}
-                    />
-                    <span>
-                        {!isRegister ? (
-                            <>
-                                New here?{" "}
-                                <u
-                                    onClick={() => {
-                                        reset();
-                                        handleSwitch();
-                                    }}
-                                >
-                                    Register
-                                </u>
-                            </>
-                        ) : (
-                            <>
-                                Already have an account?{" "}
-                                <u
-                                    onClick={() => {
-                                        reset();
-                                        handleSwitch();
-                                    }}
-                                >
-                                    Login
-                                </u>
-                            </>
+
+                        {isRegister && (
+                            <div className="input-pair">
+                                <span className="error-msg">
+                                    {errors.confirm_password?.message}
+                                </span>
+                                <input
+                                    type="password"
+                                    {...registerForm("confirm_password")}
+                                    placeholder="Confirm Password"
+                                    className={
+                                        errors.confirm_password && "error"
+                                    }
+                                />
+                            </div>
                         )}
-                    </span>
-                </div>
-            </form>
-        </div>
+                    </div>
+                    <div className="button-container flex-col">
+                        <input
+                            type="submit"
+                            value={isRegister ? "REGISTER" : "LOGIN"}
+                        />
+                        <span>
+                            {!isRegister ? (
+                                <>
+                                    New here?{" "}
+                                    <u
+                                        onClick={() => {
+                                            reset();
+                                            handleSwitch();
+                                        }}
+                                    >
+                                        Register
+                                    </u>
+                                </>
+                            ) : (
+                                <>
+                                    Already have an account?{" "}
+                                    <u
+                                        onClick={() => {
+                                            reset();
+                                            handleSwitch();
+                                        }}
+                                    >
+                                        Login
+                                    </u>
+                                </>
+                            )}
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </>
     );
 }

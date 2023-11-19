@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../utils/prisma";
-import { createToken } from "../utils/jwt";
+import prisma from "../../utils/prisma";
+import { createToken } from "../../utils/jwt";
 
 export async function POST(request: NextRequest) {
     try {

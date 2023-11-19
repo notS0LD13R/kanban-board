@@ -20,17 +20,10 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    console.log(font1, font2);
     return (
         <html lang="en">
-            <body
-                className={
-                    font1.variable +
-                    " " +
-                    font2.variable +
-                    " __variable_ec6999" +
-                    " __variable_4297f9"
-                }
-            >
+            <body className={font1.variable + " " + font2.variable}>
                 {children}
             </body>
         </html>

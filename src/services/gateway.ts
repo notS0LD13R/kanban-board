@@ -28,12 +28,15 @@ gateway.interceptors.response.use(
     }
 );
 
-export function setTokens(access: string, refresh: string) {
-    localStorage.setItem("access_token", access);
+export function setTokens(access?: string, refresh?: string) {
+    if (access) localStorage.setItem("access_token", access);
+    if (refresh) localStorage.setItem("refresh_token", refresh);
 }
 export function getAccessToken() {
     return localStorage.getItem("access_token");
 }
-export function getRefreshToken() {}
+export function getRefreshToken() {
+    return localStorage.getItem("refresh_token");
+}
 
 export default gateway;

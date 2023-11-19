@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { loginReq } from "../../types";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { createToken } from "../utils/jwt";
-import prisma from "../utils/prisma";
+import { createToken } from "../../utils/jwt";
+import prisma from "../../utils/prisma";
 
 export async function POST(request: NextRequest) {
     try {
