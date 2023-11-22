@@ -1,5 +1,3 @@
-"use client";
-
 import React, { CSSProperties, useState, FormEvent } from "react";
 
 import icons from "@/app/assets/icons";

@@ -16,7 +16,7 @@ export async function createToken(
 
     const token = await new SignJWT(data)
         .setProtectedHeader({ alg: "HS256" })
-        .setExpirationTime(expiresIn || "1m")
+        .setExpirationTime(expiresIn || "1h")
         .sign(key);
 
     return token;
@@ -30,6 +30,7 @@ export async function createToken(
 export async function verifyToken(token: string, refresh?: boolean) {
     const key = getKey(refresh);
     try {
+        console.log(await jwtVerify(token, key));
         return (await jwtVerify(token, key)).payload;
     } catch (err) {
         return false;

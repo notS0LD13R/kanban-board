@@ -1,5 +1,4 @@
 import "./page.scss";
-
 import TopNav from "./Components/TopNav/TopNav";
 import SideNav from "./Components/SideNav/SideNav";
 

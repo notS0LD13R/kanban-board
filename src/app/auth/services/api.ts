@@ -18,7 +18,7 @@ export async function register({
             email: email,
             password: password,
         });
-        setTokens(res.data.payload.refreshToken, res.data.payload.accessToken);
+        setTokens(res.data.payload.accessToken, res.data.payload.refreshToken);
         if (success) success((res as any).data.message as string);
     } catch (err) {
         if (err instanceof AxiosError)
@@ -42,9 +42,20 @@ export async function login({
             email: email,
             password: password,
         });
-        setTokens(res.data.payload.refreshToken, res.data.payload.accessToken);
-        if (success) success((res as any).response.data.message as string);
+        setTokens(res.data.payload.accessToken, res.data.payload.refreshToken);
+        console.log(res);
+        if (success) success(res.data.message);
     } catch (err) {
-        if (error) error((err as any).response.data.message as string);
+        console.log(err);
+        // if (error) error((err as any).response.data.message);
+    }
+}
+
+export async function verify() {
+    try {
+        await gateway.get(authRoutes.verify);
+        return true;
+    } catch (err) {
+        return false;
     }
 }

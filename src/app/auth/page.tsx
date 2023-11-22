@@ -1,10 +1,25 @@
 "use client";
-import { CSSProperties, useMemo, useRef, useState, MouseEvent } from "react";
+import {
+    CSSProperties,
+    useRef,
+    useState,
+    MouseEvent,
+    useLayoutEffect,
+} from "react";
 import OutlineText from "./Components/OutlineText/OutlineText";
 import Card from "./Components/Card/Card";
 import "./page.scss";
+import { verify } from "./services/api";
+import { useRouter } from "next/navigation";
 
 export default function Auth() {
+    const router = useRouter();
+    useLayoutEffect(() => {
+        (async () => {
+            if (await verify()) router.push("/dashboard");
+        })();
+    }, []);
+
     const text = "KANBAN BOARD";
     const spacing: CSSProperties = { letterSpacing: "5vw", fontSize: "4vw" };
     const [offset, setOffset] = useState({

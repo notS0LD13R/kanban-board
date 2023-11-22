@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./Card.scss";
 import { login, register } from "../../services/api";
 import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type props_T = {
     isRegister: boolean;
@@ -24,6 +27,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
             ...(isRegister && { confirm_password: "" }),
         },
     });
+    const router = useRouter();
 
     const handleValidation = (values: { [key: string]: string }) => {
         const emailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -49,6 +53,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
     };
     const successHandler = (msg: string) => {
         toast.success(msg);
+        router.push("/dashboard");
     };
     const onSubmit = handleSubmit((values) => {
         if (handleValidation(values)) return;
@@ -63,6 +68,7 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
             login({
                 email: values.email,
                 password: values.password,
+                success: successHandler,
                 error: errorHandler,
             });
     });
