@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
         const data = (await verifyToken(req.refreshToken, true)) as unknown as {
             id: string;
         };
-        console.log(data);
+
         if (!data.id) throw new Error("Invalid refresh token");
         return NextResponse.json(
             {
