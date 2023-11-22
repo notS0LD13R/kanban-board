@@ -30,7 +30,6 @@ export async function createToken(
 export async function verifyToken(token: string, refresh?: boolean) {
     const key = getKey(refresh);
     try {
-        console.log(await jwtVerify(token, key));
         return (await jwtVerify(token, key)).payload;
     } catch (err) {
         return false;

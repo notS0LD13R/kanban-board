@@ -21,8 +21,10 @@ export async function register({
         setTokens(res.data.payload.accessToken, res.data.payload.refreshToken);
         if (success) success((res as any).data.message as string);
     } catch (err) {
-        if (err instanceof AxiosError)
-            if (error) error((err as any).response.data.message as string);
+        if (error) {
+            if (err instanceof AxiosError) error(err.response!.data.message);
+            else error(err!.toString());
+        }
     }
 }
 
@@ -43,11 +45,13 @@ export async function login({
             password: password,
         });
         setTokens(res.data.payload.accessToken, res.data.payload.refreshToken);
-        console.log(res);
+
         if (success) success(res.data.message);
     } catch (err) {
-        console.log(err);
-        // if (error) error((err as any).response.data.message);
+        if (error) {
+            if (err instanceof AxiosError) error(err.response!.data.message);
+            else error(err!.toString());
+        }
     }
 }
 

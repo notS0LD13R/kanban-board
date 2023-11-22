@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
                 task: {
                     select: {
                         id: true,
-                        order: true,
                         col: true,
                         head: true,
                         para: true,

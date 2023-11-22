@@ -6,5 +6,5 @@ export const authRoutes = {
 };
 
 export const kanbanRoutes = {
-    task: "tasks/",
+    tasks: "tasks/",
 };

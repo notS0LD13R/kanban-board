@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, useEffect } from "react";
+import { Toaster, toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import {
     Active,
@@ -16,8 +17,10 @@ import { Card_T } from "./Card";
 import Column from "./Column";
 
 import "./KanbanBoard.scss";
+import { addTask, getTasks } from "./services/api";
+import { PropagateLoader } from "react-spinners";
 
-type CardGroup_T = {
+export type CardGroup_T = {
     card: Card_T;
     colID: string;
 };
@@ -32,6 +35,11 @@ export const useKanban = () => {
     return useContext(KanbanContext);
 };
 
+export const getColor = () => {
+    const colors = ["#FFAB2D", "#5ECFFF", "#FF4A55", "#38E25D"];
+    return colors[Math.floor(Math.random() * colors.length)];
+};
+
 export default function KanbanBoard() {
     const cols = [
         { head: "To-Do List", id: "To-Do List" },
@@ -39,95 +47,44 @@ export default function KanbanBoard() {
         { head: "Done", id: "Done" },
         { head: "Revised", id: "Revised" },
     ];
-    const [cards, setCards] = useState<CardGroup_T[]>([
-        {
-            card: {
-                head: "Important",
-                color: "#FFAB2D",
-                para: "Create sign up sheet for holiday student/parent conferences.",
-                progress: 50,
-                users: [{}, {}, {}],
-                created_date: new Date("10-14-2023"),
-                id: uuid(),
-            },
-            colID: "To-Do List",
-        },
-        {
-            card: {
-                head: "Important",
-                color: "#FFAB2D",
-                para: "Create sign up sheet for holiday student/parent conferences.",
-                progress: 50,
-                users: [{}, {}, {}],
-                created_date: new Date("10-13-2023"),
-                id: uuid(),
-            },
-            colID: "To-Do List",
-        },
-        {
-            card: {
-                head: "Important",
-                color: "#FFAB2D",
-                para: "Create sign up sheet for holiday student/parent conferences.",
-                progress: 50,
-                users: [{}, {}, {}],
-                created_date: new Date("10-12-2023"),
-                id: uuid(),
-            },
-            colID: "To-Do List",
-        },
-        {
-            card: {
-                head: "Important",
-                color: "#5ECFFF",
-                para: "Create sign up sheet for holiday student/parent conferences.",
-                progress: 50,
-                users: [{}, {}, {}],
-                created_date: new Date("10-11-2023"),
-                id: uuid(),
-            },
-            colID: "In Progress",
-        },
-        {
-            card: {
-                head: "Important",
-                color: "#FF4A55",
-                para: "Create sign up sheet for holiday student/parent conferences.",
-                progress: 50,
-                users: [{}, {}, {}],
-                created_date: new Date("10-10-2023"),
-                id: uuid(),
-            },
-            colID: "Done",
-        },
-        {
-            card: {
-                head: "Important",
-                color: "#38E25D",
-                para: "Create sign up sheet for holiday student/parent conferences.",
-                progress: 50,
-                users: [{}, {}, {}],
-                created_date: new Date("10-14-2023"),
-                id: uuid(),
-            },
-            colID: "Revised",
-        },
-    ]);
-    const colors = ["#FFAB2D", "#5ECFFF", "#FF4A55", "#38E25D"];
+    const [cards, setCards] = useState<CardGroup_T[]>([]);
+    const [loading, setLoading] = useState(true);
+    const errorHandler = (msg: string) => {
+        toast.error(msg);
+    };
+    useEffect(() => {
+        (async () => {
+            setLoading(true);
+            setCards(
+                (await getTasks({ error: errorHandler })).map((card: any) => ({
+                    card: {
+                        ...card,
+                        color: getColor(),
+                        progress: 60,
+                        users: [],
+                        created_date: new Date(card.created_date),
+                    },
+                    colID: card.col,
+                }))
+            );
+            setLoading(false);
+        })();
+    }, []);
 
     const handleCardAdd = () => {
         const template = {
             card: {
                 head: "Enter Heading",
-                color: colors[Math.floor(Math.random() * colors.length)],
+                color: getColor(),
                 para: "Enter a description",
                 progress: 0,
-                users: [{}],
+                users: [],
                 created_date: new Date(),
                 id: uuid(),
             },
             colID: "To-Do List",
         };
+        addTask({ card: template });
         setCards([template, ...cards]);
     };
 
@@ -141,7 +98,6 @@ export default function KanbanBoard() {
             const selectedCardPos = cards.findIndex(
                 (card) => card.card.id === cardId
             );
-
             //replace all the values from newValues in selectedCard
             cards[selectedCardPos].card = {
                 ...cards[selectedCardPos].card,
@@ -200,32 +156,42 @@ export default function KanbanBoard() {
     };
 
     return (
-        <KanbanContext.Provider value={contextValues}>
-            <DndContext
-                onDragEnd={handleDragEnd}
-                onDragOver={handleDragOver}
-                collisionDetection={closestCorners}
-            >
-                <div className="kanban-board">
-                    {cols.map((col, index) => (
-                        <Column
-                            cards={
-                                cards.length
-                                    ? cards
-                                          .filter(
-                                              (card) =>
-                                                  card &&
-                                                  card.colID === col.head
-                                          )
-                                          .map((card) => card.card)
-                                    : []
-                            }
-                            {...col}
-                            key={`kanCol${index}`}
-                        />
-                    ))}
-                </div>
-            </DndContext>
-        </KanbanContext.Provider>
+        <>
+            <Toaster richColors />
+            <KanbanContext.Provider value={contextValues}>
+                <DndContext
+                    onDragEnd={handleDragEnd}
+                    onDragOver={handleDragOver}
+                    collisionDetection={closestCorners}
+                >
+                    {loading ? (
+                        <div className="flex-center">
+                            <PropagateLoader color="var(--iris)" />
+                        </div>
+                    ) : (
+                        <div className="kanban-board">
+                            {cols.map((col, index) => (
+                                <Column
+                                    cards={
+                                        cards.length
+                                            ? cards
+                                                  .filter(
+                                                      (card) =>
+                                                          card &&
+                                                          card.colID ===
+                                                              col.head
+                                                  )
+                                                  .map((card) => card.card)
+                                            : []
+                                    }
+                                    {...col}
+                                    key={`kanCol${index}`}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </DndContext>
+            </KanbanContext.Provider>
+        </>
     );
 }

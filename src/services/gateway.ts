@@ -1,4 +1,7 @@
 import axios from "axios";
+import { authRoutes } from "./routes";
+import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 const gateway = axios.create({
     baseURL: "api/",
     headers: {
@@ -19,12 +22,26 @@ gateway.interceptors.response.use(
         return response;
     },
     (err) => {
-        if (err.status === 469) {
+        if (err.response.status === 469) {
             const { config } = err;
-            console.log(config);
+            (async () => {
+                try {
+                    const res = await gateway.post(authRoutes.refresh, {
+                        refreshToken: getRefreshToken(),
+                    });
+                    setTokens(
+                        res.data.payload.accessToken,
+                        res.data.payload.refreshToken
+                    );
+                    return gateway.request(config);
+                } catch (err) {
+                    console.log("here");
+                    return NextResponse.redirect(
+                        new URL("/auth", process.env.NEXT_PUBLIC_VERCEL_URL)
+                    );
+                }
+            })();
         }
-
-        return Promise.reject(err);
     }
 );
 
