@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cairo, Open_Sans } from "next/font/google";
 
 import "./global.css";
+import { Toaster } from "sonner";
 
 const font1 = Cairo({
     subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={font1.variable + " " + font2.variable}>
+                <Toaster richColors />
                 {children}
             </body>
         </html>

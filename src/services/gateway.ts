@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authRoutes } from "./routes";
+import { toast } from "sonner";
 const gateway = axios.create({
     baseURL: "api/",
     headers: {
@@ -33,9 +34,15 @@ gateway.interceptors.response.use(
                 );
                 return await gateway.request(config);
             } catch (err) {
-                //find a way to trigger a redirect
+                toast.error("Token Expired");
+                setTimeout(() => {
+                    window.location = "/auth" as unknown as Location;
+                }, 2000);
+                return Promise.reject(err);
             }
-        } else return Promise.reject(err);
+        } else {
+            return Promise.reject(err);
+        }
     }
 );
 

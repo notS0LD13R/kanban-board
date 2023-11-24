@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useContext, createContext, useEffect } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import {
     Active,
@@ -156,42 +156,38 @@ export default function KanbanBoard() {
     };
 
     return (
-        <>
-            <Toaster richColors />
-            <KanbanContext.Provider value={contextValues}>
-                <DndContext
-                    onDragEnd={handleDragEnd}
-                    onDragOver={handleDragOver}
-                    collisionDetection={closestCorners}
-                >
-                    {loading ? (
-                        <div className="flex-center">
-                            <PropagateLoader color="var(--iris)" />
-                        </div>
-                    ) : (
-                        <div className="kanban-board">
-                            {cols.map((col, index) => (
-                                <Column
-                                    cards={
-                                        cards.length
-                                            ? cards
-                                                  .filter(
-                                                      (card) =>
-                                                          card &&
-                                                          card.colID ===
-                                                              col.head
-                                                  )
-                                                  .map((card) => card.card)
-                                            : []
-                                    }
-                                    {...col}
-                                    key={`kanCol${index}`}
-                                />
-                            ))}
-                        </div>
-                    )}
-                </DndContext>
-            </KanbanContext.Provider>
-        </>
+        <KanbanContext.Provider value={contextValues}>
+            <DndContext
+                onDragEnd={handleDragEnd}
+                onDragOver={handleDragOver}
+                collisionDetection={closestCorners}
+            >
+                {loading ? (
+                    <div className="flex-center">
+                        <PropagateLoader color="var(--iris)" />
+                    </div>
+                ) : (
+                    <div className="kanban-board">
+                        {cols.map((col, index) => (
+                            <Column
+                                cards={
+                                    cards.length
+                                        ? cards
+                                              .filter(
+                                                  (card) =>
+                                                      card &&
+                                                      card.colID === col.head
+                                              )
+                                              .map((card) => card.card)
+                                        : []
+                                }
+                                {...col}
+                                key={`kanCol${index}`}
+                            />
+                        ))}
+                    </div>
+                )}
+            </DndContext>
+        </KanbanContext.Provider>
     );
 }

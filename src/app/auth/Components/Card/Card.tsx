@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./Card.scss";
 import { login, register } from "../../services/api";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 type props_T = {
@@ -74,89 +74,84 @@ export default function Card({ className, handleSwitch, isRegister }: props_T) {
     });
 
     return (
-        <>
-            <Toaster richColors />
-            <div className={`auth-card flex-col ${className}`}>
-                <div className="flex-col">
-                    <h2>{isRegister ? "Get started" : "Welcome back"}</h2>
-                    <span>Enter your email & password</span>
-                </div>
-                <form onSubmit={onSubmit} className="flex-col">
-                    <div className="input-container flex-col">
+        <div className={`auth-card flex-col ${className}`}>
+            <div className="flex-col">
+                <h2>{isRegister ? "Get started" : "Welcome back"}</h2>
+                <span>Enter your email & password</span>
+            </div>
+            <form onSubmit={onSubmit} className="flex-col">
+                <div className="input-container flex-col">
+                    <div className="input-pair">
+                        <span className="error-msg">
+                            {errors.email?.message}
+                        </span>
+                        <input
+                            type="text"
+                            {...registerForm("email")}
+                            placeholder="Email"
+                            className={errors.email && "error"}
+                        />
+                    </div>
+                    <div className="input-pair">
+                        <span className="error-msg">
+                            {errors.password?.message}
+                        </span>
+                        <input
+                            type="password"
+                            {...registerForm("password")}
+                            placeholder="Password"
+                            className={errors.password && "error"}
+                        />
+                    </div>
+
+                    {isRegister && (
                         <div className="input-pair">
                             <span className="error-msg">
-                                {errors.email?.message}
-                            </span>
-                            <input
-                                type="text"
-                                {...registerForm("email")}
-                                placeholder="Email"
-                                className={errors.email && "error"}
-                            />
-                        </div>
-                        <div className="input-pair">
-                            <span className="error-msg">
-                                {errors.password?.message}
+                                {errors.confirm_password?.message}
                             </span>
                             <input
                                 type="password"
-                                {...registerForm("password")}
-                                placeholder="Password"
-                                className={errors.password && "error"}
+                                {...registerForm("confirm_password")}
+                                placeholder="Confirm Password"
+                                className={errors.confirm_password && "error"}
                             />
                         </div>
-
-                        {isRegister && (
-                            <div className="input-pair">
-                                <span className="error-msg">
-                                    {errors.confirm_password?.message}
-                                </span>
-                                <input
-                                    type="password"
-                                    {...registerForm("confirm_password")}
-                                    placeholder="Confirm Password"
-                                    className={
-                                        errors.confirm_password && "error"
-                                    }
-                                />
-                            </div>
+                    )}
+                </div>
+                <div className="button-container flex-col">
+                    <input
+                        type="submit"
+                        value={isRegister ? "REGISTER" : "LOGIN"}
+                    />
+                    <span>
+                        {!isRegister ? (
+                            <>
+                                New here?{" "}
+                                <u
+                                    onClick={() => {
+                                        reset();
+                                        handleSwitch();
+                                    }}
+                                >
+                                    Register
+                                </u>
+                            </>
+                        ) : (
+                            <>
+                                Already have an account?{" "}
+                                <u
+                                    onClick={() => {
+                                        reset();
+                                        handleSwitch();
+                                    }}
+                                >
+                                    Login
+                                </u>
+                            </>
                         )}
-                    </div>
-                    <div className="button-container flex-col">
-                        <input
-                            type="submit"
-                            value={isRegister ? "REGISTER" : "LOGIN"}
-                        />
-                        <span>
-                            {!isRegister ? (
-                                <>
-                                    New here?{" "}
-                                    <u
-                                        onClick={() => {
-                                            reset();
-                                            handleSwitch();
-                                        }}
-                                    >
-                                        Register
-                                    </u>
-                                </>
-                            ) : (
-                                <>
-                                    Already have an account?{" "}
-                                    <u
-                                        onClick={() => {
-                                            reset();
-                                            handleSwitch();
-                                        }}
-                                    >
-                                        Login
-                                    </u>
-                                </>
-                            )}
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </>
+                    </span>
+                </div>
+            </form>
+        </div>
     );
 }

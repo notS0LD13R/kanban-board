@@ -60,7 +60,6 @@ export async function verify() {
         await gateway.get(authRoutes.verify);
         return true;
     } catch (err) {
-        console.log("error caught");
         return false;
     }
 }

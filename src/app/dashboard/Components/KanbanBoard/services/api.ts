@@ -12,7 +12,7 @@ export async function getTasks({
 }) {
     try {
         const res = await gateway.get(kanbanRoutes.tasks);
-        console.log(res);
+
         if (success) success(res.data.message);
         return res.data.payload.task;
     } catch (err) {
