@@ -72,8 +72,10 @@ export async function PATCH(request: NextRequest) {
                 id: req.id,
                 user_id: user_id,
             },
+            //only head and para can be changed
             data: {
-                ...req,
+                ...(req.head && { head: req.head }),
+                ...(req.para && { para: req.para }),
             },
         });
         return NextResponse.json({ message: "Task Edited" }, { status: 200 });
@@ -89,13 +91,16 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-    const req = await request.json();
-    const access = request.headers.get("authorization")?.split(" ")[1];
-    const user_id = ((await verifyToken(access!)) as { id: string }).id;
     try {
+        const req = request.nextUrl.searchParams;
+        const access = request.headers.get("authorization")?.split(" ")[1];
+        const user_id = ((await verifyToken(access!)) as { id: string }).id;
+        const id = req.get("id");
+        if (!id) throw new Error("Id missing");
+
         const res = await prisma.task.delete({
             where: {
-                id: req.id,
+                id: id,
                 user_id: user_id,
             },
         });

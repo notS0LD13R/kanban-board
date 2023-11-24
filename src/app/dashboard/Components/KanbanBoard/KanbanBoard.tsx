@@ -17,7 +17,7 @@ import { Card_T } from "./Card";
 import Column from "./Column";
 
 import "./KanbanBoard.scss";
-import { addTask, getTasks } from "./services/api";
+import { addTask, deleteTask, getTasks, updateTask } from "./services/api";
 import { PropagateLoader } from "react-spinners";
 
 export type CardGroup_T = {
@@ -90,6 +90,7 @@ export default function KanbanBoard() {
 
     const handleCardDelete = (cardId: string) => {
         setCards((cards) => cards.filter((card) => card.card.id !== cardId));
+        deleteTask({ cardId: cardId, error: errorHandler });
     };
 
     const handleCardEdit = (cardId: string, newValues: Partial<Card_T>) => {
@@ -104,6 +105,10 @@ export default function KanbanBoard() {
                 ...newValues,
             };
             return [...cards];
+        });
+        updateTask({
+            card: { id: cardId, ...newValues },
+            error: errorHandler,
         });
     };
 

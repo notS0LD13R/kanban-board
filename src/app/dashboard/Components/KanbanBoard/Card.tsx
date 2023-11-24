@@ -52,8 +52,8 @@ export default function Card(props: Card_T) {
         //@ts-ignore
         const [head, para] = [e.target.head.value, e.target.para.value];
         handleCardEdit(props.id, {
-            ...(head && { head: head }),
-            ...(para && { para: para }),
+            ...(head !== props.head && { head: head }),
+            ...(para !== props.para && { para: para }),
         });
         setState(null);
     };
