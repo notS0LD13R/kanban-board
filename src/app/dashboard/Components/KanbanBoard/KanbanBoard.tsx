@@ -126,7 +126,6 @@ export default function KanbanBoard() {
                 const activePos = cardPos(active);
                 const activeCard = cards[activePos];
                 const tempArr = arrayMove(cards, activePos, cardPos(over));
-
                 relocateTasks({
                     cards: tempArr
                         .filter((card) => card.colID === activeCard.colID)

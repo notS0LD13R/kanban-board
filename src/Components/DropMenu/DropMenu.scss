@@ -1,0 +1,78 @@
+.drop-menu {
+    --body-clr: var(--Secondary);
+    --text-clr: white;
+    color: var(--text-clr);
+    position: relative;
+
+    a {
+        &:hover {
+            all: unset;
+        }
+        all: unset;
+        text-decoration: none;
+        color: inherit;
+    }
+    li {
+        all: unset;
+        color: inherit;
+        list-style: none;
+        text-decoration: none;
+        padding: 0.25rem 1rem;
+        border-radius: 1rem;
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--Primary);
+        }
+    }
+
+    .drop-head {
+        cursor: pointer;
+    }
+    .drop-body {
+        position: absolute;
+        background-color: var(--body-clr);
+        margin-top: 0.5rem;
+        padding: 1rem;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        border-radius: 1rem;
+
+        transform-origin: top center;
+        &.active {
+            animation: appear 0.5s ease-in-out forwards;
+        }
+        &:not(.active) {
+            animation: disappear 0.5s ease-in-out forwards;
+        }
+    }
+}
+
+@keyframes appear {
+    0% {
+        display: none;
+        opacity: 0;
+        transform: translateY(-1rem) scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+//tried playing it in reverse couldnt get it to work... :( workaround
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        display: none;
+        opacity: 0;
+        transform: translateY(-1rem) scale(0);
+    }
+}

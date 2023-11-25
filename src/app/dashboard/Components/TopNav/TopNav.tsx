@@ -9,6 +9,7 @@ import "./TopNav.scss";
 
 import icons from "@/app/assets/icons";
 import { flags, profile } from "@/app/assets";
+import DropMenu from "@/Components/DropMenu/DropMenu";
 
 type icon_T = {
     icon: IconType;
@@ -20,13 +21,30 @@ type language_T = {
 };
 
 export default function TopNav() {
+    const handleLogout = () => {
+        console.log("logout");
+    };
+
+    const profileBody = [
+        {
+            value: "Profile",
+            link: "/profile",
+        },
+        {
+            value: "Logout",
+            onClick: handleLogout,
+        },
+    ];
+
     return (
         <nav className="top-nav">
             <SearchBar />
             <Link href="#">OTHER MENUS</Link>
             <IconGroup />
             <LanguageSelector />
-            <Profile />
+            <DropMenu menuBody={profileBody}>
+                <Profile />
+            </DropMenu>
         </nav>
     );
 }
