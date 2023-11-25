@@ -76,3 +76,6 @@ body {
     justify-content: center;
     align-items: center;
 }
+.loader-container {
+    height: 100%;
+}

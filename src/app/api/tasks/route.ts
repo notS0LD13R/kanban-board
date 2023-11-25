@@ -3,6 +3,10 @@ import prisma from "../utils/prisma";
 import { Prisma } from "@prisma/client";
 import { verifyToken } from "../utils/jwt";
 
+type POST_req = {
+    cards: { id: string; col: string; order: number }[];
+};
+
 export async function GET(request: NextRequest) {
     const access = request.headers.get("authorization")?.split(" ")[1];
     const id = ((await verifyToken(access!)) as { id: string }).id;
@@ -42,6 +46,7 @@ export async function POST(request: NextRequest) {
     const access = request.headers.get("authorization")?.split(" ")[1];
     const user_id = ((await verifyToken(access!)) as { id: string }).id;
     try {
+        prisma;
         const res = await prisma.task.create({
             data: {
                 ...req,
@@ -79,6 +84,35 @@ export async function PATCH(request: NextRequest) {
             },
         });
         return NextResponse.json({ message: "Task Edited" }, { status: 200 });
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError)
+            return NextResponse.json({ error: err.message }, { status: 400 });
+        else
+            return NextResponse.json(
+                { error: `Unknown Error ${err}` },
+                { status: 400 }
+            );
+    }
+}
+
+export async function PUT(request: NextRequest) {
+    const req: POST_req = await request.json();
+    const access = request.headers.get("authorization")?.split(" ")[1];
+    const user_id = ((await verifyToken(access!)) as { id: string }).id;
+
+    try {
+        const res = await prisma.$transaction(
+            req.cards.map((card) =>
+                prisma.task.update({
+                    where: { id: card.id, user_id: user_id },
+                    data: { col: card.col, order: card.order },
+                })
+            )
+        );
+        return NextResponse.json(
+            { message: "Tasks Relocated" },
+            { status: 200 }
+        );
     } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError)
             return NextResponse.json({ error: err.message }, { status: 400 });

@@ -17,7 +17,13 @@ import { Card_T } from "./Card";
 import Column from "./Column";
 
 import "./KanbanBoard.scss";
-import { addTask, deleteTask, getTasks, updateTask } from "./services/api";
+import {
+    addTask,
+    deleteTask,
+    getTasks,
+    relocateTasks,
+    updateTask,
+} from "./services/api";
 import { PropagateLoader } from "react-spinners";
 
 export type CardGroup_T = {
@@ -115,15 +121,26 @@ export default function KanbanBoard() {
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
 
-        if (active && over)
+        if (active && over) {
             setCards((cards) => {
-                const tempArr = arrayMove(
-                    cards,
-                    cardPos(active),
-                    cardPos(over)
-                );
+                const activePos = cardPos(active);
+                const activeCard = cards[activePos];
+                const tempArr = arrayMove(cards, activePos, cardPos(over));
+
+                relocateTasks({
+                    cards: tempArr
+                        .filter((card) => card.colID === activeCard.colID)
+                        .map((card, index) => ({
+                            id: card.card.id,
+                            col: card.colID,
+                            order: index,
+                        })),
+                    error: errorHandler,
+                });
+
                 return tempArr[0] ? tempArr : [];
             });
+        }
     };
 
     const handleDragOver = (e: DragOverEvent) => {
@@ -168,7 +185,7 @@ export default function KanbanBoard() {
                 collisionDetection={closestCorners}
             >
                 {loading ? (
-                    <div className="flex-center">
+                    <div className="flex-center loader-container">
                         <PropagateLoader color="var(--iris)" />
                     </div>
                 ) : (

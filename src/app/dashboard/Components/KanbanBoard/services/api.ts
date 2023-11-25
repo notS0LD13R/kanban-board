@@ -96,3 +96,25 @@ export async function updateTask({
         }
     }
 }
+
+export async function relocateTasks({
+    cards,
+    success,
+    error,
+}: {
+    cards: { id: string; order: number; col: string }[];
+    success?: (msg: string) => void;
+    error?: (msg: string) => void;
+}) {
+    try {
+        await gateway.put(kanbanRoutes.tasks, {
+            cards: cards,
+        });
+        if (success) success("Tasks relocated");
+    } catch (err) {
+        if (error) {
+            if (err instanceof AxiosError) error(err.response!.data.message);
+            else error(err!.toString());
+        }
+    }
+}
